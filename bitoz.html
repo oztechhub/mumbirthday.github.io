@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mum's Birthday Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(to right, #ff9a9c, #fecfef);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .password-section {
+            display: block;
+        }
+
+        .birthday-section {
+            display: none;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            background: #f8fafc;
+        }
+
+        input[type="password"]:focus {
+            border-color: #ff9a9c;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #ff9a9c, #fecfef);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: transform 0.2s;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(255, 154, 156, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .error {
+            color: #ff4757;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Theme Selection */
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-pastel { background: linear-gradient(135deg, #ffdde1, #ee9ca7); }
+        .theme-floral { background: linear-gradient(135deg, #ffeaa7, #fab1a0); }
+        .theme-ocean { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .theme-sunset { background: linear-gradient(135deg, #fd79a8, #e84393); }
+
+        /* Practical Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: #f8fafc;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+            color: #ff9a9c;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .theme-selector {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header floating">🎂 Happy Birthday Mum! 🎉</div>
+        
+        <!-- Password Section -->
+        <div class="content password-section" id="passwordSection">
+            <h2>A Special Surprise for You</h2>
+            <p>Enter the secret key to unlock your birthday portal</p>
+            
+            <div class="theme-selector">
+                <div class="theme-btn theme-pastel" onclick="changeTheme('pastel')"></div>
+                <div class="theme-btn theme-floral" onclick="changeTheme('floral')"></div>
+                <div class="theme-btn theme-ocean" onclick="changeTheme('ocean')"></div>
+                <div class="theme-btn theme-sunset" onclick="changeTheme('sunset')"></div>
+            </div>
+            
+            <div class="input-group">
+                <input type="password" id="passwordInput" placeholder="Type your secret key here...">
+            </div>
+            
+            <button class="btn" onclick="checkPassword()">Unlock Portal</button>
+            <div class="error" id="errorMessage">Incorrect key! Please try again.</div>
+        </div>
+
+        <!-- Birthday Content Section -->
+        <div class="content birthday-section" id="birthdaySection">
+            <h2>Welcome to Your Special Day!</h2>
+            <p>Dear Mum,</p>
+            <p>On this special day, we want you to know how much you mean to us. You've been the heart of our family, always there with love and support. Today is all about YOU – enjoy every moment!</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-gift"></i></div>
+                    <div class="feature-title">Gift Ideas</div>
+                    <div class="feature-desc">
+                        Browse curated wish lists from Amazon and Etsy. Find the perfect gift that shows how much you're loved.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="far fa-calendar-alt"></i></div>
+                    <div class="feature-title">Party Schedule</div>
+                    <div class="feature-desc">
+                        View the detailed timeline for your celebration, including family gatherings and special moments.
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="feature-title">Favorite Recipes</div>
+                    <div class="feature-desc">
+                        Enjoy your beloved recipes with step-by-step instructions and beautiful presentation tips.
+                    </div>
+                </div>
+            </div>
+            
+            <img src="https://placehold.co/400x200/FFD700/FFF?text=Birthday+Cake" alt="Beautiful birthday cake with lit candles" style="border-radius: 10px; margin: 25px 0;">
+            <button class="btn" onclick="resetPortal()">Return to Lock Screen</button>
+        </div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = "mumsbirthday2025";
+        let currentTheme = 'pastel';
+
+        function checkPassword() {
+            const userInput = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            const passwordSection = document.getElementById('passwordSection');
+            const birthdaySection = document.getElementById('birthdaySection');
+            
+            if (userInput === CORRECT_PASSWORD) {
+                passwordSection.style.display = 'none';
+                birthdaySection.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Start animations
+                createFloatingAnimation();
+            } else {
+                errorMessage.style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+        
+        function resetPortal() {
+            document.getElementById('passwordSection').style.display = 'block';
+            document.getElementById('birthdaySection').style.display = 'none';
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function changeTheme(theme) {
+            currentTheme = theme;
+            document.body.className = `theme-${theme}`;
+        }
+
+        function createFloatingAnimation() {
+            const header = document.querySelector('.header');
+            header.classList.add('floating');
+        }
+    </script>
+</body>
+</html>
